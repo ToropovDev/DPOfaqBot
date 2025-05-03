@@ -86,7 +86,7 @@ class FAQModel:
             prompt,
             max_new_tokens=300,
             do_sample=True,
-            temperature=0.7,
+            temperature=0.5,
             top_p=0.9,
             repetition_penalty=1.2,
             return_full_text=False,
