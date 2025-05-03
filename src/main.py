@@ -13,9 +13,7 @@ from src.config import BOT_TOKEN
 from src.faq_model import faq_model
 from src.texts import START_TEXT
 
-logging.basicConfig(
-    level=logging.INFO
-)
+logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
@@ -29,10 +27,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_faq(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
 
+    result = faq_model.get_best_match(
+        query=user_text,
+    )
+
+    logger.info(f"user_text: {user_text}")
+    logger.info(f"question: {result['question']}")
+    logger.info(f"score: {result['score']}")
+    logger.info(f"answer: {result['answer']}")
+    logger.info(f"generated_answer: {result['generated_answer']}")
+
     await update.message.reply_text(
-        text=faq_model.get_best_answer(
-            query=user_text,
-        ),
+        text=result["generated_answer"],
     )
 
 
